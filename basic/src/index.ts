@@ -1,8 +1,25 @@
 import "dotenv/config";
-import { PrismaClient } from "@prisma/client"; 
+import { PrismaClient } from "@prisma/client";
+import express from "express" 
+import { log } from "node:console";
+
 const prisma = new PrismaClient();
+const app=express();
+app.use(express.json());
 
 
+app.get('/user',async (req,res)=>{
+    //fetch all the user from user table
+    const user=await prisma.user.findMany();
+    res.json(user);
+})
+
+app.listen(3000,()=>{
+    console.log("Listening on port 3000");
+    
+});
+
+/*
 async function main() {
     await prisma.user.createMany({
         data:[{
@@ -24,3 +41,6 @@ main()
     .finally(async () => {
         await prisma.$disconnect();
     });
+
+
+*/
