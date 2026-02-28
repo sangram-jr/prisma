@@ -20,4 +20,15 @@ model User{
   email String @unique
   password String
   age Int
+  todos Todo[]
+}
+
+// Defines the 'Todo' model, which maps to another database table.
+model Todo {
+  id          Int @default(autoincrement()) @id 
+  title       String                        
+  description String                       
+  userId      Int      // A foreign key referencing the associated user (not explicitly defined as a relation here).
+  user        User @relation(fields: [userId], references: [id]) // Defines the relationship to the 'User' model, linking 'userId' to the 'id' in 'User'.
+  
 }
